@@ -1,0 +1,18 @@
+/*
+** EPITECH PROJECT, 2021
+** MY_ISNEG
+** File description:
+** Task04
+*/
+
+void my_putchar(char);
+
+int my_isneg(int n)
+{
+    if (n < 0) {
+        my_putchar(78);
+    } else {
+        my_putchar(80);
+    }
+    return (0);
+}
