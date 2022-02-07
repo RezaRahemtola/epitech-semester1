@@ -1,0 +1,3 @@
+The map contains only obstacles (no sky/ground).
+Each line contains a single character for a potential ground obstacle and a \n
+1 represents a wood spike, 2 a saw
