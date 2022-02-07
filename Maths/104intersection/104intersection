@@ -1,0 +1,65 @@
+#!/usr/bin/env python
+from math import sqrt, tan, radians
+from sys import argv
+from error_handling import check_errors
+import display
+
+
+def get_discriminant(a: float, b: float, c:float) -> float:
+    return pow(b, 2) - (4 * a * c)
+
+
+def get_solutions(a: float, b: float, c: float) -> list:
+    solutions = []
+    discriminant = get_discriminant(a, b, c)
+    if discriminant == 0:
+        solutions.append(-b / (2 * a))
+    elif discriminant > 0:
+        solutions.append((-b - sqrt(discriminant)) / (2 * a))
+        solutions.append((-b + sqrt(discriminant)) / (2 * a))
+    return solutions
+
+
+def get_sphere_equation(point: list, vector: list, radius: float) -> list:
+    new = []
+    new.append(vector[0] ** 2 + vector[1] ** 2 + vector[2] ** 2)
+    new.append(2 * (point[0] * vector[0] + point[1] * vector[1] + point[2] * vector[2]))
+    new.append(point[0] ** 2 + point[1] ** 2 + point[2] ** 2 - radius ** 2)
+    return new
+
+
+def get_cylinder_equation(point: list, vector: list, radius:float) -> list:
+    new = []
+    new.append(vector[0] ** 2 + vector[1] ** 2)
+    new.append(2 * (point[0] * vector[0] + point[1] * vector[1]))
+    new.append(point[0] ** 2 + point[1] ** 2 - radius ** 2)
+    return new
+
+
+def get_cone_equation(point: list, vector: list, angle: float) -> list:
+    tang = tan(radians(angle)) ** 2
+    new = []
+    new.append(vector[0] ** 2 + vector[1] ** 2 - vector[2] ** 2 * tang)
+    new.append(2 * (point[0] * vector[0] + point[1] * vector[1]) - 2 * point[2] * vector[2] * tang)
+    new.append(point[0] ** 2 + point[1] ** 2 - point[2] ** 2 * tang)
+    return new
+
+
+if __name__ == "__main__":
+    check_errors(argv)
+    display.surface_type(surface=argv[1], param=argv[8])
+    point = [float(argv[2]), float(argv[3]), float(argv[4])]
+    vector = [float(argv[5]), float(argv[6]), float(argv[7])]
+    info = float(argv[8])
+    display.passing_through_point(point, vector)
+    if argv[1] == "1":
+        eq = get_sphere_equation(point, vector, info)
+    elif argv[1] == "2":
+        eq = get_cylinder_equation(point, vector, info)
+    else:
+        eq = get_cone_equation(point, vector, info)
+    if eq[0] == eq[1] == eq[2] == 0:
+        print("There is an infinite number of intersection points.")
+        exit(0)
+    sol = get_solutions(eq[0], eq[1], eq[2])
+    display.solutions(sol, point, vector)

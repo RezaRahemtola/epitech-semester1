@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+from sys import argv, exit
+from error_handling import check_error
+from matrix import *
+from utils import *
+
+if __name__ == "__main__":
+    check_error(argv)
+    origin = Matrix([
+        [float(argv[1])],
+        [float(argv[2])],
+        [1]
+    ])
+    i = 3
+    matrix = None
+    while i < len(argv):
+        action = get_action_for_args(argv, i)
+        i += 1
+        matrix = action.consumer(matrix, *get_n_args(argv, action.args_nb, i))
+        i = action.increment(i)
+    matrix.print()
+    result = matrix.multiply_by(origin)
+    print(f"({r2d(origin.values[0][0]):.2f}, {r2d(origin.values[1][0]):.2f}) =>", end="")
+    print(f" ({r2d(result.values[0][0]):.2f}, {r2d(result.values[1][0]):.2f})")

@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+from sys import argv
+from error_handling import check_errors
+from encrypt import encrypt
+from decrypt import decrypt
+from bonus import encrypt_encrypted
+
+if __name__ == "__main__":
+    check_errors(argv)
+    if argv[3] == "0":
+        encrypt(message=argv[1], key=argv[2])
+    elif argv[3] == "1":
+        decrypt(message=argv[1], key=argv[2])
+    else:
+        encrypt_encrypted(message=argv[1], key=argv[2])

@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+import math
+from sys import argv, exit
+from vector import Vector
+from error_handling import *
+
+
+def disp_v_velocity(v_velocity):
+    print("The velocity vector of the ball is:")
+    x = f"{(v_velocity.x):.2f}"
+    y = f"{(v_velocity.y):.2f}"
+    z = f"{(v_velocity.z):.2f}"
+    print("({}, {}, {})".format(x, y, z))
+
+
+def disp_coord_after_t(t, v_now, v_velocity):
+    print("At time t + {}, ball coordinates will be:".format(t))
+    v_result = Vector(v_now.x, v_now.y, v_now.z)
+    for i in range(int(t)):
+        v_result = v_result.add_vector(v_velocity)
+    x = f"{(v_result.x):.2f}"
+    y = f"{(v_result.y):.2f}"
+    z = f"{(v_result.z):.2f}"
+    print("({}, {}, {})".format(x, y, z))
+    return v_result
+
+
+def disp_angle_paddle_hit(v_now, v_result, v_velocity):
+    if v_now.z == 0 and v_result.z == 0:
+        print("The incidence angle is:\n0.00 degrees")
+    elif (v_now.z > 0 and v_result.z < 0) or (v_now.z < 0 and v_result.z > 0):
+        angle_rad = math.asin(v_velocity.z / v_velocity.get_norm())
+        angle_deg = abs(angle_rad) * (180 / math.pi)
+        angle_str = f"{(angle_deg):.2f}"
+        print(f"The incidence angle is:\n{angle_str} degrees")
+    else:
+        print("The ball won't reach the paddle.")
+
+
+error_handling(argv)
+v_before = Vector(argv[1], argv[2], argv[3])
+v_now = Vector(argv[4], argv[5], argv[6])
+v_velocity = v_now.sub_vector(v_before)
+disp_v_velocity(v_velocity)
+v_result = disp_coord_after_t(argv[7], v_now, v_velocity)
+disp_angle_paddle_hit(v_now, v_result, v_velocity)
