@@ -1,0 +1,100 @@
+{
+    "tests" : [
+        {
+            "name": "errors - Unknown command",
+            "command": "nocommand"
+        },
+        {
+            "name": "errors - Permission denied",
+            "command": "tests/samples/perms_denied"
+        },
+        {
+            "name": "errors - Segfault (core dumped)",
+            "command": "tests/samples/segfault_coredumped"
+        },
+        {
+            "name": "errors - Division by 0",
+            "command": "tests/samples/div_zero"
+        },
+        {
+            "name": "ls - simple",
+            "command": "ls"
+        },
+        {
+            "name": "ls - with option",
+            "command": "ls -la"
+        },
+        {
+            "name": "ls - complicated",
+            "command": "ls -la /dev"
+        },
+        {
+            "name": "ls - with spaces",
+            "command": "   ls   -la    /dev            "
+        },
+        {
+            "name": "ls - with spaces and tabs",
+            "command": "\t   ls  \t -la  \t  /dev      \t      "
+        },
+        {
+            "name": "ls - Inexistant file",
+            "command": "ls nofile"
+        },
+        {
+            "name": "cd - simple",
+            "command": "cd /"
+        },
+        {
+            "name": "cd - Too many arguments",
+            "command": "cd / / / / /"
+        },
+        {
+            "name": "cd - Inexistant directory",
+            "command": "cd /nothing"
+        },
+        {
+            "name": "cd - Not a directory",
+            "command": "cd config.json"
+        },
+        {
+            "name": "setenv - simple",
+            "command": "setenv var val"
+        },
+        {
+            "name": "setenv - Too many arguments",
+            "command": "setenv too many arguments"
+        },
+        {
+            "name": "setenv - Var starting with non-letter char",
+            "command": "setenv 1var val"
+        },
+        {
+            "name": "setenv - Var with non-alphanum chars",
+            "command": "setenv va#r val"
+        },
+        {
+            "name": "unsetenv - simple",
+            "command": "unsetenv PATH"
+        },
+        {
+            "name": "unsetenv - No argument",
+            "command": "unsetenv"
+        },
+        {
+            "name": "unsetenv - simple all",
+            "command": "unsetenv *"
+        },
+        {
+            "name": "unsetenv - complex all",
+            "command": "unsetenv PATH * notAvar"
+        },
+        {
+            "name": "exit - simple",
+            "command": "exit"
+        },
+        {
+            "name": "exit - with value",
+            "command": "exit 42"
+        }
+    ]
+}
