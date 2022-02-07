@@ -1,0 +1,39 @@
+#!/usr/bin/env python
+import os
+import subprocess
+import glob
+from sys import argv
+
+def are_identical_files(file1: str, file2: str) -> bool:
+    result = subprocess.run(f"diff -s {file1} {file2}", shell=True, capture_output=True, text=True).stdout
+    return True if result == f"Files {file1} and {file2} are identical\n" else False
+
+def antman(file: str, type: str, output: str):
+    subprocess.run(f"../antman/antman {file} {type} > {output}", shell=True)
+
+def giantman(file: str, type: str, output: str):
+    subprocess.run(f"../giantman/giantman {file} {type} > {output}", shell=True)
+
+def analyse_file(file: str, antman_output: str, giantman_output: str):
+    type = os.path.split(os.path.split(file)[0])[1]
+    filename = os.path.split(file)[1]
+    antman(file, type, antman_output)
+    giantman(antman_output, type, giantman_output)
+    if are_identical_files(file, giantman_output):
+        file_size = os.stat(file).st_size if os.stat(file).st_size > 0 else 1
+        result = round(os.stat(antman_output).st_size / file_size * 100, 2)
+        color = "31" if result > 100 else "32"
+        print(f"\033[1;{color};40mThe file {filename} was compressed and reduced to {result}% of its original size.\033[0;0m")
+    else:
+        print(f"\033[1;31;40mError: files {giantman_output} and {filename} differ\033[0;0m")
+    os.remove(antman_output)
+    os.remove(giantman_output)
+
+
+if __name__ == "__main__":
+    folders = "123" if len(argv) == 1 else argv[1:]
+
+    for folder in folders:
+        print(f"\n{folder}/")
+        for file in glob.glob("./samples/" + folder + '/**/*.*', recursive=True):
+            analyse_file(file, "./compressed.data", "./uncompressed.data")
