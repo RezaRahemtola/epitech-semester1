@@ -15,6 +15,7 @@ SRC = src/strings/concat.c \
 	  src/strings/replace.c \
 	  src/strings/memory.c \
 	  src/strings/transform.c \
+	  src/stringf/my_stringf.c \
 	  src/numbers/put.c \
 	  src/numbers/check.c \
 	  src/numbers/len.c \

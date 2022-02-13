@@ -19,7 +19,8 @@ int main(int argc, char **argv, char **env)
 {
     int exit = 0;
 
-    if (check_errors(argc, argv) == 84)
+    (void) argv;
+    if (argc != 1)
         return (84);
     signal(SIGINT, sigint_handler);
     exit = minishell(env);

@@ -7,7 +7,7 @@
 
 #include "my.h"
 
-char *my_nbr_to_string(unsigned int nb)
+char *my_nb_to_str(unsigned int nb)
 {
     int nbrlen = my_nbrlen(nb);
     char *str = my_str_allocfill(sizeof(char) * nbrlen, '\0');

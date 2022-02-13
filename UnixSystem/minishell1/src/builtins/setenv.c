@@ -25,39 +25,32 @@ static bool check_setenv_errors(int argc, char **argv)
     return (false);
 }
 
-static void update_current_var(str_t *list, char *var, char *new)
+static void update_current_var(list_t *list, char *var, char *new)
 {
-    while (list != NULL) {
-        if (my_strncmp(var, list->str, my_strlen(var)) == 0) {
-            free(list->str);
-            list->str = new;
+    for (; list != NULL; list = list->next) {
+        if (my_strncmp(var, list->data, my_strlen(var)) == 0) {
+            free(list->data);
+            list->data = new;
             break;
         }
-        list = list->next;
     }
 }
 
-static void set_var(str_t **list, char *var, char *value)
+static void set_var(list_t **list, char *var, char *value)
 {
     char *full_var = my_newstrcat(var, "=", 0, 0);
     char *current_value = get_env_value(*list, full_var);
-    int len = my_strlen(var) + my_strlen(value) + 2;
-    char *new = my_str_allocfill(len, '\0');
+    char *new = my_stringf("%s=%s", var, value);
 
-    my_strcpy(new, var);
-    my_strcat(new, "=", 0);
-    my_strcat(new, value, 0);
-    if (current_value == NULL) {
-        my_putend(new, list);
-        free(new);
-    } else {
+    if (current_value == NULL)
+        mylist_append(new, list);
+    else
         update_current_var(*list, full_var, new);
-    }
     free(current_value);
     free(full_var);
 }
 
-int my_setenv(char **argv, str_t **env)
+int my_setenv(char **argv, list_t **env)
 {
     int exit = 0;
     int argc = my_arraylen(argv);

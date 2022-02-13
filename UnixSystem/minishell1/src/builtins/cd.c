@@ -8,7 +8,7 @@
 #include <errno.h>
 #include "minishell.h"
 
-static bool check_cd_errors(char **argv, str_t *env)
+static bool check_cd_errors(char **argv, list_t *env)
 {
     char *path = get_env_value(env, "HOME=");
 
@@ -26,7 +26,7 @@ static bool check_cd_errors(char **argv, str_t *env)
     return (false);
 }
 
-static char *get_cd_path(char **argv, str_t *env)
+static char *get_cd_path(char **argv, list_t *env)
 {
     if (argv[1] == NULL) {
         return (get_env_value(env, "HOME="));
@@ -39,14 +39,14 @@ static char *get_cd_path(char **argv, str_t *env)
 
 static int disp_chdir_error(char *path)
 {
-    my_puterror(path);
-    my_puterror(": ");
-    my_puterror(strerror(errno));
-    my_puterror(".\n");
+    char *str = my_stringf("%s: %s.\n", path, strerror(errno));
+
+    my_puterror(str);
+    free(str);
     return (1);
 }
 
-static void cd_update_env(char *old_dir, str_t **env)
+static void cd_update_env(char *old_dir, list_t **env)
 {
     char *new_dir = getcwd(NULL, 0);
 
@@ -55,7 +55,7 @@ static void cd_update_env(char *old_dir, str_t **env)
     free(new_dir);
 }
 
-int my_cd(char **argv, str_t **env)
+int my_cd(char **argv, list_t **env)
 {
     char *path = NULL;
     int exit = 0;

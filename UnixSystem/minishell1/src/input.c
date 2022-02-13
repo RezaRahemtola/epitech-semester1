@@ -26,29 +26,29 @@ static char *get_pattern(char **str)
 
 static char **input_to_argv(char *input)
 {
-    str_t *list = NULL;
-    str_t *tmp = NULL;
+    list_t *list = NULL;
+    list_t *tmp = NULL;
     char *pattern = NULL;
     char **argv = NULL;
     int len = 0;
 
     for (; input[0] != '\0'; len++) {
         pattern = get_pattern(&input);
-        my_putend(pattern, &list);
+        mylist_append(my_strdup(pattern), &list);
         free(pattern);
     }
     argv = malloc(sizeof(char *) * (len + 1));
     tmp = list;
     for (int i = 0; tmp != NULL; i++) {
-        argv[i] = my_strdup(tmp->str);
+        argv[i] = my_strdup(tmp->data);
         tmp = tmp->next;
     }
     argv[len] = NULL;
-    list_destroy(list);
+    mylist_destroy(list, true);
     return (argv);
 }
 
-static char *get_replaced_buffer(char *buffer, str_t *env)
+static char *get_replaced_buffer(char *buffer, list_t *env)
 {
     char *new_buffer = NULL;
     char *home_path = get_env_value(env, "HOME=");
@@ -65,7 +65,7 @@ static char *get_replaced_buffer(char *buffer, str_t *env)
     return (new_buffer);
 }
 
-int get_user_input(char ***argv, str_t *env)
+int get_user_input(char ***argv, list_t *env)
 {
     size_t size = 0;
     int read = 0;

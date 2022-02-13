@@ -7,11 +7,8 @@
 
 SRC =   src/main.c \
 		src/parsing.c \
-		src/error_handling.c \
 		src/input.c \
-		src/str_list.c \
 		src/minishell.c \
-		src/env.c \
 		src/builtins/builtins.c \
 		src/builtins/cd.c \
 		src/builtins/env.c \
@@ -25,7 +22,7 @@ NAME =  mysh
 CC              =    gcc
 CFLAGS          =    -Wall -Wextra
 CPPFLAGS        =    -I include
-LDFLAGS         =    -L lib/my -lmy
+LDFLAGS         =    -L lib/my -lmy -L lib/mylist -llist
 
 TEST_NAME       =    unit_tests
 TEST_PATH       =    tests/*.c
@@ -35,6 +32,7 @@ all:		$(NAME)
 
 $(NAME):	$(OBJ)
 			make -C lib/my
+			make -C lib/mylist
 			$(CC) $(SRC) -o $(NAME) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
 
 clean:
@@ -43,6 +41,7 @@ clean:
 fclean:		clean
 			$(RM) $(NAME)
 			@make fclean -C lib/my -s
+			@make fclean -C lib/mylist -s
 			@find -name "$(TEST_NAME)*" -delete
 
 re:			fclean all

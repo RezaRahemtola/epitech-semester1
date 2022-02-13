@@ -42,7 +42,7 @@ static void disp_command_error(const char *command)
     }
 }
 
-static char **get_paths(str_t *env)
+static char **get_paths(list_t *env)
 {
     char *str = get_env_value(env, "PATH=");
     char **paths = NULL;
@@ -56,15 +56,12 @@ static char **get_paths(str_t *env)
 
 static char *search_paths(char **paths, char *command)
 {
-    int len = 0;
     char *curr = NULL;
 
     if (paths == NULL)
         return (NULL);
     for (int i = 0; paths[i] != NULL; i++) {
-        len = my_strlen(paths[i]) + my_strlen(command) + 2;
-        curr = my_str_allocfill(sizeof(char) * len, '\0');
-        my_strcat(my_strcat(my_strcat(curr, paths[i], 0), "/", 0), command, 0);
+        curr = my_stringf("%s/%s", paths[i], command);
         if (is_valid_command(curr)) {
             my_free_2d_array(paths);
             return (curr);
@@ -75,7 +72,7 @@ static char *search_paths(char **paths, char *command)
     return (NULL);
 }
 
-char *get_command_path(char *command, str_t *env)
+char *get_command_path(char *command, list_t *env)
 {
     char **paths = get_paths(env);
     char *path_command = NULL;

@@ -30,11 +30,11 @@ static int parent_waiting(void)
     return (0);
 }
 
-static int exec_command(char *command, char **argv, str_t **env_list)
+static int exec_command(char *command, char **argv, list_t **env_list)
 {
     int exit = 0;
     int builtin_index = get_builtin(argv[0]);
-    char **env_array = list_to_array(*env_list);
+    char **env_array = mylist_to_array(*env_list, NULL);
 
     if (builtin_index != -1) {
         exit = builtins[builtin_index].fun_ptr(argv, env_list);
@@ -43,7 +43,7 @@ static int exec_command(char *command, char **argv, str_t **env_list)
     } else {
         exit = parent_waiting();
     }
-    my_free_2d_array(env_array);
+    free(env_array);
     return (exit);
 }
 
@@ -51,7 +51,7 @@ int minishell(char **original_env)
 {
     char **argv = NULL;
     char *command = NULL;
-    str_t *env_list = array_to_list(original_env);
+    list_t *env_list = array_to_mylist(original_env, &my_strdup);
     int exit = 0;
 
     while (get_user_input(&argv, env_list) != -1) {
@@ -67,6 +67,6 @@ int minishell(char **original_env)
         my_free_2d_array(argv);
         free(command);
     }
-    list_destroy(env_list);
+    mylist_destroy(env_list, true);
     return (exit);
 }
