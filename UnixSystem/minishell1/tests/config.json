@@ -95,6 +95,22 @@
         {
             "name": "exit - with value",
             "command": "exit 42"
+        },
+        {
+            "name": "exit - Too many arguments",
+            "command": "exit 42 42"
+        },
+        {
+            "name": "exit - Value > 256",
+            "command": "exit 298"
+        },
+        {
+            "name": "exit - Non integer value",
+            "command": "exit NaN"
+        },
+        {
+            "name": "exit - Badly formed number",
+            "command": "exit 42NaN"
         }
     ]
 }

@@ -49,7 +49,7 @@ static char **get_paths(list_t *env)
 
     if (str == NULL)
         return (NULL);
-    paths = str_to_word_array(str, ':');
+    paths = my_strsplit(str, ':');
     free(str);
     return (paths);
 }

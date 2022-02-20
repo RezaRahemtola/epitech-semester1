@@ -5,45 +5,53 @@
 ## Makefile
 ##
 
-SRC =   src/main.c \
-		src/parsing.c \
-		src/input.c \
-		src/minishell.c \
-		src/builtins/builtins.c \
-		src/builtins/cd.c \
-		src/builtins/env.c \
-		src/builtins/setenv.c \
-		src/builtins/unsetenv.c
+SRC_DIR        =    src/
 
-OBJ =   $(SRC:.c=.o)
+SRC            =    main.c \
+					parsing.c \
+					input.c \
+					execute.c \
+					minishell.c \
+					builtins/builtins.c \
+					builtins/cd.c \
+					builtins/env.c \
+					builtins/setenv.c \
+					builtins/unsetenv.c \
+					builtins/exit.c
 
-NAME =  mysh
+SRCS           =    $(addprefix $(SRC_DIR), $(SRC))
 
-CC              =    gcc
-CFLAGS          =    -Wall -Wextra
-CPPFLAGS        =    -I include
-LDFLAGS         =    -L lib/my -lmy -L lib/mylist -llist
+OBJ            =    $(SRCS:.c=.o)
 
-TEST_NAME       =    unit_tests
-TEST_PATH       =    tests/*.c
-TEST_CSFLAGS    =    --coverage -lcriterion
+NAME           =    mysh
+
+CC             =    gcc
+CFLAGS         =    -Wall -Wextra
+CPPFLAGS       =    -I include
+LDFLAGS        =    -L lib/my -L lib/mylist
+LDLIBS         =    -lmy -llist
 
 all:		$(NAME)
 
-$(NAME):	$(OBJ)
+$(NAME):	$(OBJ) libs
+			$(CC) -o $(NAME) $(OBJ) $(LDFLAGS) $(LDLIBS)
+
+libs:
 			make -C lib/my
 			make -C lib/mylist
-			$(CC) $(SRC) -o $(NAME) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
 
 clean:
 			$(RM) $(OBJ)
 
 fclean:		clean
 			$(RM) $(NAME)
-			@make fclean -C lib/my -s
-			@make fclean -C lib/mylist -s
-			@find -name "$(TEST_NAME)*" -delete
+			make fclean -C lib/my -s
+			make fclean -C lib/mylist -s
+
+debug:		CFLAGS += -g
+debug:		re
+			valgrind --track-origins=yes --leak-check=full ./$(NAME)
 
 re:			fclean all
 
-.PHONY: all clean fclean re tests_run
+.PHONY: all libs clean fclean debug re

@@ -33,3 +33,14 @@ bool my_str_isprintable(const char *str)
     }
     return (true);
 }
+
+bool my_charinstr(char c, const char *str)
+{
+    if (str == NULL)
+        return (false);
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] == c)
+            return (true);
+    }
+    return (false);
+}

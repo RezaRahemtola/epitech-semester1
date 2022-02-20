@@ -34,6 +34,7 @@ void upper_s_flag(char *str);
 void hash_formatting(va_list args, char **str_ptr);
 void l_ll_formatting(va_list args, char **str_ptr);
 
-char **str_to_word_array(char *str, char delim);
+char **my_strsplit(char *str, char delim);
+char **str_to_word_array(char *str);
 
 #endif /* !LIBMY_H */

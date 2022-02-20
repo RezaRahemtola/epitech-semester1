@@ -30,10 +30,12 @@ bool my_str_isalphanum(const char *str);
 bool my_str_islower(const char *str);
 bool my_str_isupper(char const *str);
 bool my_str_isprintable(const char *str);
+bool my_charinstr(char c, const char *str);
 
 // Compare
 int my_strcmp(const char *s1, const char *s2);
 int my_strncmp(const char *s1, const char *s2, int n);
+int my_strcount(const char *str, const char *pattern);
 
 // Copy
 char *my_strcpy(char *dest, const char *src);
