@@ -18,14 +18,11 @@ OBJ = $(SRC:.c=.o)
 NAME = giantman
 
 all: $(OBJ)
-	make -C lib/my
 	gcc $(FLAGS) -o $(NAME) $(OBJ) $(CPPFLAG) $(LIB)
 	rm -f $(OBJ)
-	make -C lib/my clean
 
 clean:
 	rm -f $(OBJ)
-	make -C lib/my clean
 	rm -f file.txt
 
 fclean: clean

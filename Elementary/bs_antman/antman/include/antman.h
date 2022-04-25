@@ -12,4 +12,5 @@
     #include <sys/stat.h>
     #include <fcntl.h>
 
+int my_getnbr(char const *str);
 #endif /* !ANTMAN_H_ */
