@@ -17,15 +17,12 @@
 
 // Maths
 int my_pow(int nb, int p);
-int my_sqrt(int nb);
 
 int my_getnbr(char const *str);
 
 char *my_nb_to_str(unsigned int nb);
-void my_sort_int_array(int *array, int size);
 
 char *my_strstr(char const *str, char const *to_find);
-void my_swap(int *a, int *b);
 char *int_to_base(unsigned long long int nb, char *base);
 
 int my_printf(const char *format, ...);

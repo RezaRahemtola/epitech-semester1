@@ -7,7 +7,6 @@
 
 #include <sys/types.h>
 #include <unistd.h>
-#include "my.h"
 
 int main(int argc, char **argv)
 {
@@ -15,6 +14,6 @@ int main(int argc, char **argv)
     pid_t ppid = getppid();
     pid_t pgid = __getpgid(pid);
 
-    my_printf("PID: %d\nPPID: %d\nPGID: %d\n", pid, ppid, pgid);
+    printf("PID: %d\nPPID: %d\nPGID: %d\n", pid, ppid, pgid);
     return (0);
 }

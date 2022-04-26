@@ -26,17 +26,3 @@ int my_put_nbr(int nb)
     }
     return (0);
 }
-
-char *my_nbr_to_string(unsigned int nb)
-{
-    char *str = malloc(sizeof(char) * 20);
-    int i = 0;
-
-    if (nb == 0) return ("0");
-    for (; nb > 0; i++) {
-        str[i] = (nb % 10) + '0';
-        nb /= 10;
-    }
-    str[i] = '\0';
-    return (my_revstr(str));
-}

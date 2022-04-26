@@ -14,7 +14,4 @@ void my_putnbr(int nb);
 // Len
 int my_nbrlen(int nb);
 
-// Check
-bool my_nbr_isprime(int nb);
-
 #endif /* !LIBMY_NUMBERS_H */

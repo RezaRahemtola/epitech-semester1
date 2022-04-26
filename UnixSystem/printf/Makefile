@@ -24,16 +24,7 @@ SRC_LIB = lib/my_putchar.c \
 
 OBJ = $(SRC:.c=.o)
 
-OBJ_LIB = my_putchar.o \
-        my_strlen.o  \
-        my_putstr.o \
-        my_strcpy.o \
-        my_put_nbr.o \
-        my_strcmp.o \
-        my_revstr.o \
-        my_strcat.o \
-        my_strdup.o \
-        my_int_to_base.o
+OBJ_LIB = $(SRC_LIB:.c=.o)
 
 NAME = libmy.a
 
@@ -43,8 +34,7 @@ FLAGS = -Wall -Wextra
 
 all:	libmy.a
 
-libmy.a:
-		@gcc -c $(SRC) $(SRC_LIB)
+libmy.a:        $(OBJ) $(OBJ_LIB)
 		@ar rc $(NAME) $(OBJ) $(OBJ_LIB)
 		@make clean -s
 

@@ -23,13 +23,3 @@ char *my_strcat(char *dest, char *src, int free_src)
     if (free_src) free(src);
     return (dest);
 }
-
-char *my_newstrcat(char *str1, char *str2, int free1, int free2)
-{
-    int len = my_strlen(str1) + my_strlen(str2);
-    char *new_str = malloc(sizeof(char) * len + 1);
-
-    my_strcat(new_str, str1, free1);
-    my_strcat(new_str, str2, free1);
-    return (new_str);
-}
