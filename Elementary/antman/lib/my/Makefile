@@ -23,27 +23,7 @@ SRC = src/my_putchar.c \
 	  src/my_printf.c \
 	  src/my_printf_flags.c \
 	  src/my_printf_l_ll.c \
-	  src/my_malloc_str.c \
-
-OBJ_PATH = my_putchar.o \
-	       my_strlen.o  \
-	       my_strncpy.o \
-	       my_putstr.o \
-	       my_getnbr.o \
-	       my_strcpy.o \
-	       my_put_nbr.o \
-	       my_strncmp.o \
-	       my_compute_power_rec.o \
-	       my_strcmp.o \
-	       my_revstr.o \
-	       my_strcat.o \
-	       my_strstr.o \
-	       my_strdup.o \
-	       my_int_to_base.o \
-	       my_printf.o \
-	       my_printf_flags.o \
-	       my_printf_l_ll.o \
-		   my_malloc_str.o \
+	  src/my_malloc_str.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -51,9 +31,8 @@ NAME = libmy.a
 
 all:	$(NAME)
 
-$(NAME):
-			@gcc -c $(SRC) -I include
-			@ar rc $(NAME) $(OBJ_PATH)
+$(NAME):	$(OBJ)
+			@ar rc $(NAME) $(OBJ)
 			@mkdir -p ../../include
 			@cp include/my.h ../../include
 			@make clean -s

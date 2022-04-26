@@ -24,14 +24,16 @@ static void my_show_list(linked_list_t *list)
 
 void disp_op(char *op, linked_list_t *list_a, linked_list_t *list_b, int is_v)
 {
-    if (list_is_sorted(list_a) && list_b == NULL)
-        my_printf("%s", op);
-    else
-        my_printf("%s ", op);
+    if (list_is_sorted(list_a) && list_b == NULL) {
+        my_putstr(op);
+    } else {
+        my_putstr(op);
+        my_putchar(' ');
+    }
     if (is_v) {
-        my_printf("\nl_a: ");
+        my_putstr("\nl_a: ");
         my_show_list(list_a);
-        my_printf("l_b: ");
+        my_putstr("l_b: ");
         my_show_list(list_b);
     }
 }

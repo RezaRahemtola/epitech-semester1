@@ -33,27 +33,13 @@ SRC_H = include/mycsfml_all.h \
 
 OBJ = $(SRC:.c=.o)
 
-OBJ_PATH = audio.o \
-	  	   clock.o \
-		   color.o \
-	       draw.o \
-	  	   elements.o \
-	  	   events.o \
-	  	   framebuffer.o \
-	  	   create_destroy.o \
-	  	   display.o \
-	  	   move.o \
-		   utils.o \
-		   text.o \
-	  	   window.o
-
 NAME = libmycsfml.a
+CPPFLAGS = -I include
 
 all:	$(NAME)
 
-$(NAME):
-			@gcc -c $(SRC) -I include
-			@ar rc $(NAME) $(OBJ_PATH)
+$(NAME): 	$(OBJ)
+			@ar rc $(NAME) $(OBJ)
 			@mkdir -p ../../include
 			@cp $(SRC_H) ../../include
 			@make clean -s

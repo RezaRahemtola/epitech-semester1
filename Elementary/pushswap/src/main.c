@@ -61,6 +61,6 @@ int main(int argc, char **argv)
     while (list_is_sorted(list_a) == 0 || list_b != NULL) {
         lowest_algo(&list_a, &list_b, is_v);
     }
-    my_printf("\n");
+    my_putchar('\n');
     return (0);
 }
